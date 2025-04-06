@@ -1,4 +1,5 @@
 from openai import OpenAI
+from settings import *
 
 class ReActAgent:
     def __init__(self):
@@ -6,7 +7,7 @@ class ReActAgent:
 
     def say_hello(self):
         chat_completion = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model=LLM_MODEL,
             messages=[{"role": "user", "content": "Hello world"}]
         )
         return chat_completion.choices[0].message.content
