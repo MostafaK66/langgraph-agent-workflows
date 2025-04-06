@@ -19,7 +19,7 @@ class Agent:
     def execute(self):
         completion = self.client.chat.completions.create(
             model=LLM_MODEL,
-            temperature=0,
+            temperature=LLM_TEMPERATURE,
             messages=self.messages
         )
         return completion.choices[0].message.content
