@@ -1,14 +1,27 @@
 from openai import OpenAI
 from settings import *
 
-class ReActAgent:
-    def __init__(self):
-        self.client = OpenAI()
 
-    def say_hello(self):
-        chat_completion = self.client.chat.completions.create(
+class Agent:
+    def __init__(self, system=""):
+        self.client = OpenAI()
+        self.system = system
+        self.messages = []
+        if self.system:
+            self.messages.append({"role": "system", "content": system})
+
+    def __call__(self, message):
+        self.messages.append({"role": "user", "content": message})
+        result = self.execute()
+        self.messages.append({"role": "assistant", "content": result})
+        return result
+
+    def execute(self):
+        completion = self.client.chat.completions.create(
             model=LLM_MODEL,
-            messages=[{"role": "user", "content": "Hello world"}]
+            temperature=0,
+            messages=self.messages
         )
-        return chat_completion.choices[0].message.content
+        return completion.choices[0].message.content
+
 
