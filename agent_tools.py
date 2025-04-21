@@ -3,7 +3,7 @@ class AgentTools:
         pass  # No initialization needed for now
 
     def calculate(self, what):
-        return eval(what)  # ⚠️ Consider replacing eval later for security
+        return eval(what)
 
     def average_dog_weight(self, name):
         name = name.strip().lower()
