@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 from utility import Agent
 from prompts import prompt
 from agent_tools import AgentTools
-import re  # for extracting numbers
+import re
 
 def extract_weight(text):
     match = re.search(r"(\d+)", text)
