@@ -2,35 +2,34 @@ from dotenv import load_dotenv
 from utility import Agent
 from prompts import prompt
 from agent_tools import AgentTools
+import re  # for extracting numbers
+
+def extract_weight(text):
+    match = re.search(r"(\d+)", text)
+    return int(match.group(1)) if match else 0
 
 def main():
     load_dotenv()
+
     tools = AgentTools()
-
-
     abot = Agent(system=prompt)
-    question = """I have 2 dogs, a border collie and a scottish terrier. \
+
+    question = """I have 2 dogs, a border collie and a scottish terrier. 
     What is their combined weight"""
+
     agent_thoughts = abot(question)
-    print(agent_thoughts)
+    print("Agent Response:\n", agent_thoughts)
 
-    action_border_collie = "Observation: {}".format(tools.average_dog_weight("Border Collie"))
-    print(action_border_collie)
+    border_collie_resp = tools.average_dog_weight("Border Collie")
+    scottish_terrier_resp = tools.average_dog_weight("Scottish Terrier")
+    print("Observation:", border_collie_resp)
+    print("Observation:", scottish_terrier_resp)
 
+    border_weight = extract_weight(border_collie_resp)
+    scottish_weight = extract_weight(scottish_terrier_resp)
 
-
-    # # Ask a question to the agent
-    # result = abot("How much does a toy poodle weigh?")
-    # print("Agent Response:", result)
-    #
-    # # Also directly call the tool function
-    # tools = AgentTools()
-    # direct_result = tools.average_dog_weight("Toy Poodle")
-    # print("Direct Tool Response:", direct_result)
-    #
-    # next_prompt = "Observation: {}".format(direct_result)
-    # abot(next_prompt)
-    # print(abot.messages)
+    combined = tools.calculate(f"{border_weight} + {scottish_weight}")
+    print("Final Combined Weight:", combined, "lbs")
 
 if __name__ == "__main__":
     main()
