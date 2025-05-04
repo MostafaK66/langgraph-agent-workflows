@@ -1,6 +1,6 @@
 class AgentTools:
     def __init__(self):
-        pass  # No initialization needed for now
+        pass
 
     def calculate(self, what):
         return eval(what)
