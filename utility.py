@@ -1,8 +1,6 @@
 from langchain_core.messages import SystemMessage, ToolMessage
-from openai import OpenAI
-from settings import *
 from langgraph.graph import StateGraph, END
-
+from agent_state import AgentState
 
 class Agent:
 
