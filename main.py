@@ -1,35 +1,22 @@
 from dotenv import load_dotenv
+from langchain_core.messages import HumanMessage
 from utility import Agent
-from prompts import prompt
-from agent_tools import AgentTools
-import re
-
-def extract_weight(text):
-    match = re.search(r"(\d+)", text)
-    return int(match.group(1)) if match else 0
+from agent_state import AgentState
 
 def main():
     load_dotenv()
 
-    tools = AgentTools()
-    abot = Agent(system=prompt)
+    agent = Agent.from_defaults()
 
-    question = """I have 2 dogs, a border collie and a scottish terrier. 
-    What is their combined weight"""
+    question = "What is the latest news about AI and healthcare?"
+    state = AgentState(messages=[HumanMessage(content=question)])
 
-    agent_thoughts = abot(question)
-    print("Agent Response:\n", agent_thoughts)
+    result = agent.graph.invoke(state)
 
-    border_collie_resp = tools.average_dog_weight("Border Collie")
-    scottish_terrier_resp = tools.average_dog_weight("Scottish Terrier")
-    print("Observation:", border_collie_resp)
-    print("Observation:", scottish_terrier_resp)
-
-    border_weight = extract_weight(border_collie_resp)
-    scottish_weight = extract_weight(scottish_terrier_resp)
-
-    combined = tools.calculate(f"{border_weight} + {scottish_weight}")
-    print("Final Combined Weight:", combined, "lbs")
+    for msg in result["messages"]:
+        if msg.type == "ai":
+            print("\n✅ Final Answer:")
+            print(msg.content)
 
 if __name__ == "__main__":
     main()

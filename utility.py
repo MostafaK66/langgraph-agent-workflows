@@ -45,4 +45,16 @@ class Agent:
         print("Back to the model!")
         return {'messages': results}
 
+    @classmethod
+    def from_defaults(cls):
+        from langchain_openai import ChatOpenAI
+        from prompts import prompt
+        from agent_tools import AgentTools
+
+        model = ChatOpenAI(model="gpt-3.5-turbo")  # reduce inference cost
+        tools = AgentTools().get_known_actions()
+        return cls(model, tools, system=prompt)
+
+
+
 
