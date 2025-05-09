@@ -5,9 +5,7 @@ from agent_state import AgentState
 
 def main():
     load_dotenv()
-
     agent = Agent.from_defaults()
-
     question = "What is the latest news about AI and healthcare?"
     state = AgentState(messages=[HumanMessage(content=question)])
 
