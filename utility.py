@@ -1,3 +1,4 @@
+from altair import condition
 from langchain_core.messages import SystemMessage, ToolMessage
 from langgraph.graph import StateGraph, END
 from agent_state import AgentState
@@ -14,7 +15,7 @@ class Agent:
             self.exists_action,
             {True: "action", False: END}
         )
-        graph.add_edge("action", "llm")
+        graph.add_edge(start_key="action", end_key="llm")
         graph.set_entry_point("llm")
         self.graph = graph.compile()
         self.tools = {t.name: t for t in tools}
