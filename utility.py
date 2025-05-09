@@ -51,7 +51,7 @@ class Agent:
         from prompts import prompt
         from agent_tools import AgentTools
 
-        model = ChatOpenAI(model="gpt-3.5-turbo")
+        model = ChatOpenAI(model= "gpt-3.5-turbo")
         tools = AgentTools().get_known_actions()
         return cls(model, tools, system=prompt)
 
