@@ -3,7 +3,7 @@ from langchain_core.messages import HumanMessage
 from utility import Agent
 from agent_state import AgentState
 
-def main():
+def main_agent():
     load_dotenv()
     agent = Agent.from_defaults()
     question = "Who won the super bowl in 2024? In what state is the winning team headquarters located? \
@@ -18,7 +18,7 @@ def main():
             print(msg.content)
 
 if __name__ == "__main__":
-    main()
+    main_agent()
 
 
 
