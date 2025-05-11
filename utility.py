@@ -4,10 +4,11 @@ from agent_state import AgentState
 from langchain_openai import ChatOpenAI
 from prompts import prompt
 from agent_tools import AgentTools
+from langgraph.checkpoint.sqlite import SqliteSaver
 
 class Agent:
 
-    def __init__(self, model, tools, system=""):
+    def __init__(self, model, tools, checkpointer, system=""):
         self.system = system
         graph = StateGraph(AgentState)
         graph.add_node("llm", self.call_openai)
@@ -19,7 +20,7 @@ class Agent:
         )
         graph.add_edge(start_key="action", end_key="llm")
         graph.set_entry_point("llm")
-        self.graph = graph.compile()
+        self.graph = graph.compile(checkpointer=checkpointer)
         self.tools = {t.name: t for t in tools}
         self.model = model.bind_tools(tools)
 
@@ -52,7 +53,8 @@ class Agent:
     def from_defaults(cls):
         model = ChatOpenAI(model= "gpt-3.5-turbo")
         tools = AgentTools().get_known_actions()
-        return cls(model, tools, system=prompt)
+        memory = SqliteSaver.from_conn_string(":memory:")
+        return cls(model, tools, system=prompt, checkpointer=memory)
 
 
 
