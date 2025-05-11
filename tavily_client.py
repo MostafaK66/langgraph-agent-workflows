@@ -16,6 +16,13 @@ class TavilyWrapper:
 
 
 
+city = "Rotterdam"
+query = f"""
+    what is the current weather in {city}?
+    Should I travel there today?
+    weather.com
+""".strip()
+
 tw = TavilyWrapper()
-answer = tw.search_with_answer("What is in Nvidia's new Blackwell GPU?")
+answer = tw.search_with_answer(query)
 print("✅ Tavily Answer:", answer)
