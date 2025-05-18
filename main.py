@@ -6,8 +6,7 @@ from agent_state import AgentState
 def main_agent():
     load_dotenv()
     agent = Agent.from_defaults()
-    question = "Who won the super bowl in 2024? In what state is the winning team headquarters located? \
-                What is the GDP of that state? Answer each question."
+    question = "what about Amsterdam?"
     state = AgentState(messages=[HumanMessage(content=question)])
 
     result = agent.graph.invoke(state)
