@@ -5,6 +5,7 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from agent_state import AgentState
 from agent_tools import AgentTools
 from prompts import prompt
+from persistence import Persistence
 
 
 class Agent:
@@ -59,8 +60,9 @@ class Agent:
     def from_defaults(cls):
         model = ChatOpenAI(model="gpt-3.5-turbo")
         tools = AgentTools().get_known_actions()
-        cm = SqliteSaver.from_conn_string(":memory:")
-        saver = cm.__enter__()
+        # cm = SqliteSaver.from_conn_string(":memory:")
+        # saver = cm.__enter__()
+        saver = Persistence.synchronous(":memory:")
         return cls(model=model, tools=tools, system=prompt, checkpointer=saver)
 
 
