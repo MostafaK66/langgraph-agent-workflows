@@ -1,7 +1,6 @@
 from langgraph.graph import StateGraph, END
 from langchain_core.messages import SystemMessage, ToolMessage
 from langchain_openai import ChatOpenAI
-from langgraph.checkpoint.sqlite import SqliteSaver
 from agent_state import AgentState
 from agent_tools import AgentTools
 from prompts import prompt
