@@ -20,7 +20,9 @@ class Agent:
         graph.set_entry_point("llm")
         if checkpointer is not None:
             print("i found check pointer")
-            self.graph = graph.compile(checkpointer=checkpointer)
+            self.graph = graph.compile(checkpointer=checkpointer,
+                                       interrupt_before=["action"])
+
         else:
             self.graph = graph.compile()
         self.graph = graph.compile()
