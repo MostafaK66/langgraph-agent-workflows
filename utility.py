@@ -22,10 +22,9 @@ class Agent:
             print("i found check pointer")
             self.graph = graph.compile(checkpointer=checkpointer,
                                        interrupt_before=["action"])
-
         else:
             self.graph = graph.compile()
-        self.graph = graph.compile()
+
         self.model = model.bind_tools(tools)
         self.tools = {t.name: t for t in tools}
 

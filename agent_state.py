@@ -19,4 +19,4 @@ def reduce_messages(left: list[AnyMessage], right: list[AnyMessage]) -> list[Any
     return merged
 
 class AgentState(TypedDict):
-    messages: Annotated[list[AnyMessage], operator.add]
+    messages: Annotated[list[AnyMessage], reduce_messages]
