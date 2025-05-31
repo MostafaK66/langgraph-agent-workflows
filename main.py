@@ -20,21 +20,17 @@ def main_agent():
         state.values["messages"] = messages
         agent.graph.update_state(cfg, state.values)
 
-    # 2) run until the LLM produces its tool call
     for event in agent.graph.stream({"messages": messages}, config=cfg):
         node, val = next(iter(event.items()))
-        # unpack state snapshot
         if isinstance(val, tuple):
             state, _meta = val
         else:
             state, _meta = val, None
 
-        # most recent AI message
         ai_msg = state["messages"][-1]
         print("\n[AI “thought” before tool] →", repr(ai_msg.content))
         print("tool_calls:", ai_msg.tool_calls)
 
-        # let human edit or skip
         choice = input("edit thought (e) / skip tool (s) / continue (y): ").strip().lower()
         if choice == "e":
             edited = copy.deepcopy(ai_msg)
@@ -49,14 +45,12 @@ def main_agent():
         else:
             messages.append(ai_msg)
 
-        # write that edit back into the agent's state
         state = agent.graph.get_state(cfg)
         state.values["messages"] = messages
         agent.graph.update_state(cfg, state.values)
 
-        break  # now we’ve injected our edit, resume
+        break
 
-    # 3) run the tool step (action) and let human inspect/edit its output
     for event in agent.graph.stream(None, config=cfg):
         node, val = next(iter(event.items()))
         if isinstance(val, tuple):
@@ -83,18 +77,15 @@ def main_agent():
             else:
                 messages.extend(tool_msgs)
 
-            # write that into state
             state = agent.graph.get_state(cfg)
             state.values["messages"] = messages
             agent.graph.update_state(cfg, state.values)
 
         elif node == "llm":
-            # final LLM answer
             final_msg = state["messages"][-1]
             print("\n[AI final answer]\n" + final_msg.content)
             messages.append(final_msg)
 
-    # 4) done! show final state & history
     print("\n✅ Done.")
     print("\n📌 Final State Snapshot:")
     final_state = agent.graph.get_state(cfg)
