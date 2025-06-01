@@ -7,13 +7,29 @@ def main():
     agent = EssayWriterAgent()
     print("✅ Model initialized successfully.")
 
-    # Optional: Run a quick prompt to verify connection
+    # Ask user for essay topic
+    task = input("📝 Enter your essay topic: ").strip()
+
+    # Build initial agent state
+    state = {
+        "task": task,
+        "plan": "",
+        "draft": "",
+        "critique": "",
+        "content": [],
+        "revision_number": 0,
+        "max_revisions": 3
+    }
+
+    # Run planning step
     try:
-        response = agent.model.invoke([{"role": "user", "content": "Say hello!"}])
-        print("🤖 Response:", response.content)
+        result = agent.plan_node(state)
+        print("\n🧠 Essay Plan Generated:")
+        print(result["plan"])
     except Exception as e:
-        print("❌ Failed to get response from model:", str(e))
+        print("❌ Failed to generate essay plan:", str(e))
 
 
 if __name__ == "__main__":
     main()
+
