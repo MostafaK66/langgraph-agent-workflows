@@ -26,16 +26,13 @@ class EssayWriterAgent:
         return {"plan": response.content}
 
     def research_plan_node(self, state: AgentState):
-        # Ask the model to generate 3 search queries
         queries = self.model.with_structured_output(Queries).invoke([
             SystemMessage(content=RESEARCH_PLAN_PROMPT),
             HumanMessage(content=state['task'])
         ])
 
-        # Retrieve current content or initialize a list
         content = state['content'] or []
 
-        # Perform search for each query using Tavily
         for q in queries.queries:
             response = self.tavily.search(query=q, max_results=2)
             for r in response['results']:
