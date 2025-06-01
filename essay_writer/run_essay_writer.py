@@ -7,10 +7,8 @@ def main():
     agent = EssayWriterAgent()
     print("✅ Model initialized successfully.")
 
-    # Ask user for essay topic
     task = input("📝 Enter your essay topic: ").strip()
 
-    # Build initial agent state
     state = {
         "task": task,
         "plan": "",
@@ -21,7 +19,6 @@ def main():
         "max_revisions": 3
     }
 
-    # Run planning step
     try:
         result = agent.plan_node(state)
         print("\n🧠 Essay Plan Generated:")
