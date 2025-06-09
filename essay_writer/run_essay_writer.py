@@ -45,6 +45,15 @@ def main():
         print("❌ Failed to generate draft:", str(e))
         return
 
+    try:
+        result = agent.reflection_node(state)
+        state.update(result)
+        print("\n📋 Essay Critique:")
+        print(state["critique"])
+    except Exception as e:
+        print("❌ Failed to generate critique:", str(e))
+        return
+
     print("\n✅ Done.")
 
 
