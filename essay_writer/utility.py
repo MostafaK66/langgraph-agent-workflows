@@ -56,4 +56,13 @@ class EssayWriterAgent:
             "revision_number": state.get("revision_number", 1) + 1
         }
 
+    def reflection_node(self, state: AgentState):
+        messages = [
+            SystemMessage(content=REFLECTION_PROMPT),
+            HumanMessage(content=state['draft'])
+        ]
+        response = self.model.invoke(messages)
+        return {"critique": response.content}
+
+
 
