@@ -64,5 +64,17 @@ class EssayWriterAgent:
         response = self.model.invoke(messages)
         return {"critique": response.content}
 
+    def research_critique_node(self, state: AgentState):
+        queries = self.model.with_structured_output(Queries).invoke([
+            SystemMessage(content=RESEARCH_CRITIQUE_PROMPT),
+            HumanMessage(content=state['critique'])
+        ])
+        content = state['content'] or []
+        for q in queries.queries:
+            response = self.tavily.search(query=q, max_results=2)
+            for r in response['results']:
+                content.append(r['content'])
+        return {"content": content}
+
 
 
