@@ -56,6 +56,15 @@ def main():
         print("❌ Failed to generate critique:", str(e))
         return
 
+    try:
+        result = agent.research_critique_node(state)
+        state.update(result)
+        print("\n🔬 Additional Research Based on Critique:")
+        for i, snippet in enumerate(state["content"][-6:], 1):  # Show only last 6 additions
+            print(f"  [Critique +{i}] {snippet[:120].strip()}...")
+    except Exception as e:
+        print("❌ Failed to perform critique research:", str(e))
+
     print("\n✅ Done.")
 
 
