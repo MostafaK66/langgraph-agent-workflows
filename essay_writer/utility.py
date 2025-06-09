@@ -76,5 +76,11 @@ class EssayWriterAgent:
                 content.append(r['content'])
         return {"content": content}
 
+    def should_continue(self, state: AgentState):
+        if state["revision_number"] > state["max_revisions"]:
+            return END
+        return "reflect"
+
+
 
 
