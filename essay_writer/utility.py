@@ -40,3 +40,20 @@ class EssayWriterAgent:
 
         return {"content": content}
 
+    def generation_node(self, state: AgentState):
+        content = "\n\n".join(state['content'] or [])
+        user_message = HumanMessage(
+            content=f"{state['task']}\n\nHere is my plan:\n\n{state['plan']}")
+        messages = [
+            SystemMessage(
+                content=WRITER_PROMPT.format(content=content)
+            ),
+            user_message
+        ]
+        response = self.model.invoke(messages)
+        return {
+            "draft": response.content,
+            "revision_number": state.get("revision_number", 1) + 1
+        }
+
+
