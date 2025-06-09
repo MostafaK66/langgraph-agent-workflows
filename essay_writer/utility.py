@@ -5,6 +5,8 @@ from prompts import *
 from agent_state import AgentState
 from langchain_core.messages import SystemMessage, HumanMessage
 from data_validator import Queries
+from langgraph.graph import END
+
 
 class EssayWriterAgent:
     def __init__(self):
