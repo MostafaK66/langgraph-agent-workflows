@@ -1,13 +1,15 @@
 from utility import EssayWriterAgent
 from dotenv import load_dotenv
-
+import sys
 
 def main():
     load_dotenv()
     agent = EssayWriterAgent()
     print("✅ Model initialized successfully.")
 
-    task = input("📝 Enter your essay topic: ").strip()
+    print(
+        "📝 Enter your essay topic (multi-line allowed). Press Enter, then Ctrl+D (Linux/macOS) or Ctrl+Z (Windows) when done:")
+    task = sys.stdin.read().strip()
 
     state = {
         "task": task,
