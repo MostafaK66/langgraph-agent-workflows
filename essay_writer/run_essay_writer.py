@@ -17,7 +17,6 @@ def main():
     )
     task = sys.stdin.read().strip()
 
-    # Initial state
     initial_state: AgentState = {
         "task": task,
         "plan": "",
@@ -29,16 +28,13 @@ def main():
     }
     thread = {"configurable": {"thread_id": "1"}}
 
-    # Stream through the graph
     for event in ew_graph.stream(initial_state, thread):
-        # Safely unpack node name + its output value
         node_name, val = next(iter(event.items()))
         if isinstance(val, tuple):
             state, meta = val
         else:
             state, meta = val, None
 
-        # Print according to which node just ran:
         if node_name == "planner":
             print("\n🧠 Essay Plan Generated:")
             print(state["plan"])
@@ -62,7 +58,6 @@ def main():
             for i, snippet in enumerate(state["content"][-6:], 1):
                 print(f"  [Critique +{i}] {snippet[:120].strip()}...")
 
-        # Terminate when the graph emits END
         if node_name == END:
             print("\n✅ All done—max revisions reached.")
             break
