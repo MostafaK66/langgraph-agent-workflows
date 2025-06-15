@@ -41,3 +41,5 @@ class EssayWriterGraph:
             memory = checkpointer
 
         self.graph = builder.compile(checkpointer=memory)
+
+
