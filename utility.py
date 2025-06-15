@@ -21,7 +21,8 @@ class Agent:
         if checkpointer is not None:
             print("i found check pointer")
             self.graph = graph.compile(checkpointer=checkpointer,
-                                       interrupt_after=['planner', 'generate', 'reflect', 'research_plan', 'research_critique'])
+
+                                       interrupt_before=["action"])
         else:
             self.graph = graph.compile()
 
