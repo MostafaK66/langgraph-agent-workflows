@@ -4,6 +4,8 @@ from agent_state import AgentState
 from utility import EssayWriterAgent
 from graph_builder import EssayWriterGraph
 from langgraph.graph import END
+import warnings
+warnings.filterwarnings("ignore")
 
 def main():
     load_dotenv()
