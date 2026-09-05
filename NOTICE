@@ -1,0 +1,13 @@
+LangGraph Agents Lab
+
+This repository is a production-oriented refactoring of the original
+ai_agents_langgraph project by MostafaK66:
+https://github.com/MostafaK66/ai_agents_langgraph
+
+The original repository did not contain a license file at the time of this
+refactoring. The repository owner has licensed this version under the MIT
+License in LICENSE. Third-party packages remain subject to their own licenses.
+
+The default model was updated from legacy `gpt-3.5-turbo` to `gpt-4o-mini`, the
+replacement recommended by the official OpenAI model documentation. It remains
+fully configurable.

@@ -1,0 +1,13 @@
+# LangGraph Agents Lab repository map
+
+- `src/langgraph_agents/config.py`: immutable TOML and environment configuration
+- `src/langgraph_agents/messages.py`: immutable research-message domain model and reducer
+- `src/langgraph_agents/research.py`: tool-using research-agent nodes
+- `src/langgraph_agents/essay.py`: essay planning, research, drafting, and reflection nodes
+- `src/langgraph_agents/graphs.py`: lazy LangGraph assembly and SQLite checkpointer context
+- `src/langgraph_agents/integrations.py`: lazy OpenAI/LangChain and Tavily adapters
+- `src/langgraph_agents/runners.py`: application-level graph execution
+- `src/langgraph_agents/cli.py`: thin command-line composition root
+- `tests/`: deterministic offline tests
+
+Run `make quality` for lint, strict typing, branch-aware tests, and compilation.

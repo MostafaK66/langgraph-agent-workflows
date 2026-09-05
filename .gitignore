@@ -1,1 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+build/
+
+# Quality tools
+.coverage
+coverage.xml
+htmlcov/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+
+# Secrets and local configuration
 .env
+.env.*
+!.env.example
+config.toml
+
+# Runtime state
+*.sqlite
+*.sqlite3
+*.db
+checkpoints/
