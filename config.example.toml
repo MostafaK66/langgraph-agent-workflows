@@ -1,0 +1,14 @@
+[model]
+name = "gpt-4o-mini"
+temperature = 0.0
+
+[search]
+max_results = 2
+max_queries = 3
+
+[essay]
+max_revisions = 3
+
+[runtime]
+thread_id = "default"
+checkpoint_database = ":memory:"
